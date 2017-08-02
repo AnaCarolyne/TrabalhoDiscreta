@@ -13,15 +13,16 @@ import java.util.Scanner;
  *
  * @author anacarolyne.franca
  */
-public class TrabalhoFuncaoHash {
-    public static ArrayList<Node> tabela = new ArrayList<Node>();
+public class FunçãoHash {
+
+    public static ArrayList<Elemento> tabela = new ArrayList<Elemento>();
 
     public static void main(String[] args) throws IOException {
         Scanner input = new Scanner(System.in);
-        int indice = 0;
-        int item = 0;
+        int chave = 0;
+        int valor = 0;
         //Inicializa Hash e Tabela de Itens
-        HashTable hash = init();
+        TabelaHash hash = init();
         //Menu
         int escolha = 10;
         do {
@@ -38,8 +39,8 @@ public class TrabalhoFuncaoHash {
                     imprimeTabela();
 
                     System.out.println("Inserir item:");
-                    item = input.nextInt();
-                    Node elemento = buscarNo(item);
+                    valor = input.nextInt();
+                    Elemento elemento = buscarNo(valor);
                     if (elemento != null) {
                         hash.insertItem(elemento);
                     } else {
@@ -49,8 +50,8 @@ public class TrabalhoFuncaoHash {
                 case 2:
                     System.out.println("*************** Deletar ***************");
                     System.out.println("Deletar valor:");
-                    item = input.nextInt();
-                    Node target = buscarNo(item);
+                    valor = input.nextInt();
+                    Elemento target = buscarNo(valor);
                     if (target != null) {
                         hash.clearItem(target);
                     } else {
@@ -62,20 +63,20 @@ public class TrabalhoFuncaoHash {
                     escolha = input.nextInt();
                     if (escolha == 1) {
                         System.out.println("Buscar o Indice:");
-                        item = input.nextInt();
-                        Node no = hash.buscarByIndice(item);
+                        valor = input.nextInt();
+                        Elemento no = hash.buscarByIndice(valor);
                         if (no != null) {
-                            System.out.println("Encontrado " + no.item + " no indice " + no.indice);
+                            System.out.println("Encontrado " + no.valor + " no indice " + no.chave);
                         } else {
                             System.out.println("Indice vazio...");
                         }
                     }
                     if (escolha == 2) {
                         System.out.println("Buscar o Nó:");
-                        item = input.nextInt();
-                        indice = hash.buscarByNode(item);
-                        if (indice != -1) {
-                            System.out.println("\nEcontrado " + item + " no indice " + indice);
+                        valor = input.nextInt();
+                        chave = hash.buscarByNode(valor);
+                        if (chave != -1) {
+                            System.out.println("\nEcontrado " + valor + " no indice " + chave);
                         } else {
                             System.out.println("\nValor não encontrado...");
                         }
@@ -94,20 +95,20 @@ public class TrabalhoFuncaoHash {
         } while (escolha != 5);
     }
 
-    public static HashTable init() {
+    public static TabelaHash init() {
         Scanner input = new Scanner(System.in);
 
         System.out.println("*************** Linear Pobring (Bi-direcional)***************");
         System.out.println("Escolha a quantidade de entradas: ");
         int size = input.nextInt();
-        tabela = new ArrayList<Node>(size);
+        tabela = new ArrayList<Elemento>(size);
         preencherTabela(size);
 
         System.out.println("Escolha o tamanho da Tabela Hash: ");
         size = input.nextInt();
         System.out.println("Escolha o incremento: ");
         int incremento = input.nextInt();
-        return new HashTable(size, incremento);
+        return new TabelaHash(size, incremento);
     }
 
     public static void imprimeTabela() {
@@ -115,7 +116,7 @@ public class TrabalhoFuncaoHash {
         String posicoes = "";
         for (int i = 0; i < tabela.size(); i++) {
             posicoes += "-" + i + "-";
-            fita += "[" + tabela.get(i).item + "]";
+            fita += "[" + tabela.get(i).valor + "]";
         }
         System.out.println("-Chaves-   [Valores]");
         System.out.println(posicoes);
@@ -131,17 +132,17 @@ public class TrabalhoFuncaoHash {
         int prog = input.nextInt();
         for (int i = 0; i < size; i++) {
             value = value + prog;
-            tabela.add(new Node(value, i));
+            tabela.add(new Elemento(value, i));
             fita += "[" + value + "]";
         }
         System.out.println(fita + "\n");
     }
 
-    public static int buscarIndice(int item) {
+    public static int buscarIndice(int valor) {
         for (int i = 0; i < tabela.size(); i++) {
-            Node no = tabela.get(i);
+            Elemento no = tabela.get(i);
             if (no != null) {
-                if (no.item == item) {
+                if (no.valor == valor) {
                     return i;
                 }
             }
@@ -149,11 +150,11 @@ public class TrabalhoFuncaoHash {
         return -1;
     }
 
-    public static Node buscarNo(int item) {
+    public static Elemento buscarNo(int valor) {
         for (int i = 0; i < tabela.size(); i++) {
-            Node no = tabela.get(i);
+            Elemento no = tabela.get(i);
             if (no != null) {
-                if (no.item == item) {
+                if (no.valor == valor) {
                     return no;
                 }
             }
