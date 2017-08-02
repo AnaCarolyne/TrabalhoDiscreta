@@ -11,10 +11,10 @@ package trabalhofuncaohash;
  */
 public class Elemento {
 
-    int valor;
+    char valor;
     int chave;
 
-    public Elemento(int valor, int chave) {
+    public Elemento(char valor, int chave) {
         this.valor = valor;
         this.chave = chave;
     }
@@ -23,7 +23,7 @@ public class Elemento {
         return valor;
     }
 
-    public void setValor(int valor) {
-        this.valor= valor;
+    public void setValor(char valor) {
+        this.valor = valor;
     }
 }
