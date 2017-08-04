@@ -21,7 +21,7 @@ public class FunçãoHash {
         Scanner input = new Scanner(System.in);
         int chave = 0;
         char valor = 0;
-        TabelaHash hash = criaTabela();
+        TabelaHash hash = geraTabela();
 
         int opcao = 10;
         do {
@@ -34,9 +34,9 @@ public class FunçãoHash {
                     imprimeTabela();
                     System.out.println("Inserir:");
                     valor = input.next().charAt(0);
-                    Elemento elemento = buscarElemento(valor);
+                    Elemento elemento = procurarElemento(valor);
                     if (elemento != null) {
-                        hash.insertItem(elemento);
+                        hash.ColocarItem(elemento);
                     } else {
                         System.out.println("Valor não existe...");
                     }
@@ -44,7 +44,7 @@ public class FunçãoHash {
                 case 2:
                     System.out.println("Deletar:");
                     valor = input.next().charAt(0);
-                    Elemento target = buscarElemento(valor);
+                    Elemento target = procurarElemento(valor);
                     if (target != null) {
                         hash.clearItem(target);
                     } else {
@@ -54,7 +54,7 @@ public class FunçãoHash {
                 case 3:
                     System.out.println("Buscar:");
                     valor = input.next().charAt(0);
-                    chave = hash.buscarByNode(valor);
+                    chave = hash.procurarNode(valor);
                     if (chave != -1) {
                         System.out.println("\n"+valor + " na posição:" + chave);
                     } else {
@@ -70,10 +70,10 @@ public class FunçãoHash {
         } while (opcao < 5);
     }
 
-    public static TabelaHash criaTabela() {
+    public static TabelaHash geraTabela() {
         int size = 0;
         Scanner input = new Scanner(System.in);
-        criaEntradas();
+        geraEntradas();
         System.out.println("Tamanho do Hash?");
         size = input.nextInt();
         System.out.println("Escolha o incremento: ");
@@ -90,7 +90,7 @@ public class FunçãoHash {
         System.out.println(fita);
     }
 
-    public static void criaEntradas() {
+    public static void geraEntradas() {
         String fita = "";
         int value = 0;
         int i = 0;
@@ -102,7 +102,7 @@ public class FunçãoHash {
         System.out.println(fita + "\n");
     }
 
-    public static Elemento buscarElemento(char valor) {
+    public static Elemento procurarElemento(char valor) {
         for (int i = 0; i < tabela.size(); i++) {
             Elemento no = tabela.get(i);
             if (no != null) {

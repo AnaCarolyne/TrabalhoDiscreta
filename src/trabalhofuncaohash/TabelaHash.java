@@ -41,7 +41,7 @@ public class TabelaHash {
         return chave % size;
     }
 
-    public void insertItem(Elemento valor) {
+    public void ColocarItem(Elemento valor) {
         int atual = 0;
         int mod = mod(valor.chave);
         int colisoes = 0;
@@ -49,7 +49,7 @@ public class TabelaHash {
             if (hash[mod] == null) {
                 hash[mod] = valor;
             } else {
-                while (inserir(atual, mod, valor)) {
+                while (colocar(atual, mod, valor)) {
                     colisoes++;
                     if (direcao) {
                         atual = atual + incremento;
@@ -62,7 +62,7 @@ public class TabelaHash {
         }
     }
 
-    public boolean inserir(int atual, int mod, Elemento valor) {
+    public boolean colocar(int atual, int mod, Elemento valor) {
         if (direcao) {
             int target = mod - atual;
             if (target < 0) {
@@ -104,9 +104,9 @@ public class TabelaHash {
         if (hash[mod] != null) {
             if (hash[mod].valor == no.valor) {
                 hash[mod] = null;
-                reOrdenar();
+                reordenar();
             } else {
-                while (deletar(atual, mod, no)) {
+                while (transferir(atual, mod, no)) {
                     colisoes++;
                     if (direcao) {
                         atual = atual + incremento;
@@ -119,7 +119,7 @@ public class TabelaHash {
         }
     }
 
-    public boolean deletar(int atual, int mod, Elemento valor) {
+    public boolean transferir(int atual, int mod, Elemento valor) {
         if (direcao) {
             int target = mod - atual;
             if (target < 0) {
@@ -129,7 +129,7 @@ public class TabelaHash {
                         System.out.println(valor.valor);
                         System.out.println("1");
                         hash[size + target] = null;
-                        reOrdenar();
+                        reordenar();
                         return false;
                     }
                 }
@@ -139,7 +139,7 @@ public class TabelaHash {
                     if (hash[target].valor == valor.valor) {
                         System.out.println("2");
                         hash[target] = null;
-                        reOrdenar();
+                        reordenar();
                         return false;
                     }
                 }
@@ -152,7 +152,7 @@ public class TabelaHash {
                     if (hash[target - size].valor == valor.valor) {
                         System.out.println("3");
                         hash[target - size] = null;
-                        reOrdenar();
+                        reordenar();
                         return false;
                     }
                 }
@@ -162,7 +162,7 @@ public class TabelaHash {
                     if (hash[target].valor == valor.valor) {
                         System.out.println("4");
                         hash[target] = null;
-                        reOrdenar();
+                        reordenar();
                         return false;
                     }
                 }
@@ -172,23 +172,23 @@ public class TabelaHash {
         return true;
     }
 
-    public void reOrdenar() {
+    public void reordenar() {
         Elemento[] clone = hash.clone();
-        limpar();
+        varrer();
         for (int i = 0; i < size; i++) {
             if (clone[i] != null) {
-                insertItem(clone[i]);
+                ColocarItem(clone[i]);
             }
         }
     }
 
-    public void limpar() {
+    public void varrer() {
         for (int i = 0; i < size; i++) {
             hash[i] = null;
         }
     }
 
-    public Elemento buscarByIndice(int indice) {
+    public Elemento procurarIndice(int indice) {
         int hash1 = mod(indice);
         while (hash[hash1] != null) {
             return hash[hash1];
@@ -196,7 +196,7 @@ public class TabelaHash {
         return null;
     }
 
-    public int buscarByNode(int item) {
+    public int procurarNode(int item) {
         for (int i = 0; i < this.size; i++) {
             if (hash[i] != null) {
                 if (hash[i].valor == item) {
